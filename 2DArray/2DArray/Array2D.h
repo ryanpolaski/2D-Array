@@ -16,8 +16,8 @@ public:
 	Row<T> operator[](int index);
 	const Row<T> operator[](int index) const; // const method
 
-	int getRow() const;
-	int getColumn() const;
+	const int getRow() const;
+	const int getColumn() const;
 	void setRow(int rows);
 	void setColumn(int columns);
 	T & Select(int row, int column);
@@ -34,10 +34,8 @@ Array2D<T>::Array2D() : m_row(0), m_col(0)
 }
 
 template <typename T>
-Array2D<T>::Array2D(int row, int col)
+Array2D<T>::Array2D(int row, int col) : m_row(row), m_col(col)
 {
-	m_row = row;
-	m_col = col;
 	m_array.setLength(row*col);
 }
 
@@ -79,13 +77,13 @@ Array2D<T>::~Array2D()
 }
 
 template <typename T>
-int Array2D<T>::getRow() const
+const int Array2D<T>::getRow() const
 {
 	return m_row;
 }
 
 template <typename T>
-int Array2D<T>::getColumn() const 
+const int Array2D<T>::getColumn() const 
 {
 	return m_col;
 }
@@ -93,7 +91,7 @@ int Array2D<T>::getColumn() const
 template <typename T>
 void Array2D<T>::setRow(int rows)
 {
-	if (rows > 0)
+	if (rows > m_row)
 	{
 		m_row = rows;
 	}
@@ -104,7 +102,7 @@ void Array2D<T>::setRow(int rows)
 template <typename T>
 void Array2D<T>::setColumn(int columns)
 {
-	if (columns > 0)
+	if (columns > m_col)
 	{
 		m_col = columns;
 	}
@@ -115,7 +113,7 @@ void Array2D<T>::setColumn(int columns)
 template <typename T>
 T & Array2D<T>::Select(int row, int column)
 {
-	return m_array[row*col + col];
+	return m_array[row*m_col + column];
 }
 
 #endif

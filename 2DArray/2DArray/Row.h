@@ -9,21 +9,28 @@ template <typename T>
 class Row
 {
 public:
-	Row(Array2D<T> & ar, int row);
-	T & operator[](int column) const;
+	Row(const Array2D<T> & ar, const int row);
+	T & operator[](int column);
+	const T & operator[](int column) const;
 private:
 	Array2D<T> & m_array2D;
 	int m_row;
 };
 
 template <typename T>
-Row<T>::Row(Array2D<T> & ar, int row) : m_array2D(ar), m_row(row)
+Row<T>::Row(const Array2D<T> & ar, const int row): m_array2D(const_cast<Array2D<T> &>(ar)), m_row(row)
 {
 
 }
 
 template <typename T>
-T & Row<T>::operator [] (int column) const
+T & Row<T>::operator[](int column)
+{
+	return m_array2D.m_array[m_row * m_array2D.m_col + column];
+}
+
+template <typename T>
+const T & Row<T>::operator [] (int column) const
 {
 	return m_array2D.m_array[m_row * m_array2D.m_col + column];
 }
